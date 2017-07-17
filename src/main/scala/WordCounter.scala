@@ -1,26 +1,33 @@
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
-/**
-  * Created by francescoperera on 7/16/17.
-  */
-object WordCounter extends App {
 
-  val input: List[String] = List("A simple sentence is not that simple for a non simple person",
+object WordCounter {
+
+  private val input: List[String] = List("A simple sentence is not that simple for a non simple person",
                             "A repetitive string is not a repetitive sentence")
 
-  val conf = new SparkConf().setAppName("wordCount").setMaster("local")
-  // Create a Scala Spark Context.
-  val sc = new SparkContext(conf)
-  val i = sc.parallelize(input)
-  println(i)
-  // Split up into words.
-  val words = i.flatMap(line => line.split(" "))
-  // Transform into word and count.
-  val counts = words.map(word => (word, 1)).reduceByKey( _ + _).collect().toList
-  println(counts)
-  sc.stop
+  def main(args: Array[String]): Unit = {
 
-  // Save the word count back out to a text file, causing evaluation.
+    /** local Spark Configuration. Use this for local/ test work */
+    val conf = new SparkConf().setAppName("wordCount").setMaster("local")
+
+    // Create a Scala Spark Context.
+    /**  Databricks has already a spark context. Invoke it using .getOrCreate*/
+    val sc = SparkContext.getOrCreate(conf)
+    val rddSentences: RDD[String] = sc.parallelize(input)
+    println(rddSentences)
+    // Split up into words.
+    val words: RDD[String] = rddSentences.flatMap(line => line.split(" "))
+    // Transform into word and count.
+    val counts: List[(String,Int)] = words.map(word => (word, 1)).reduceByKey( _ + _).collect().toList
+    println(counts)
+  }
+
+
+
+
+
 
 
 }
