@@ -1,0 +1,2 @@
+"A simple sentence is not that simple for a non simple person",
+"A repetitive string is not a repetitive sentence"
