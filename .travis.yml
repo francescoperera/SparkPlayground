@@ -1,3 +1,25 @@
 language: scala
 scala:
    - 2.11.11
+cache:
+  directories:
+  - "$HOME/.ivy2"
+  - "$HOME/spark"
+  - "$HOME/.sbt"
+jdk:
+- oraclejdk8
+sudo: false
+script:
+- sbt ++$TRAVIS_SCALA_VERSION clean publish
+before_cache:
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+- find $HOME/.sbt        -name "*.lock"               -print -delete
+deploy:
+  provider: s3
+  secret_access_key: AKIAJMVPH47YHSLXVXTA
+  access_key_id: fYHcmYjh+F2QCf/5q3nfx5yHV3g5x1wIcMV1TUyq
+  bucket: stream-fp
+  skip_cleanup: true
+  local_dir: /SparkPlayground/target/scala-2.11
+  on:
+    branch: master
