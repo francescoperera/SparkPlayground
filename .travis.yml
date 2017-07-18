@@ -16,8 +16,8 @@ before_cache:
 - find $HOME/.sbt        -name "*.lock"               -print -delete
 deploy:
   provider: s3
-  secret_access_key: AKIAJMVPH47YHSLXVXTA
-  access_key_id: fYHcmYjh+F2QCf/5q3nfx5yHV3g5x1wIcMV1TUyq
+  secret_access_key: 
+  access_key_id: 
   bucket: stream-fp
   skip_cleanup: true
   local_dir: /target/scala-2.11/sparkplayground_2.11-1.0.jar
