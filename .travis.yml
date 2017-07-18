@@ -20,6 +20,6 @@ deploy:
   access_key_id: fYHcmYjh+F2QCf/5q3nfx5yHV3g5x1wIcMV1TUyq
   bucket: stream-fp
   skip_cleanup: true
-  local_dir: /SparkPlayground/target/scala-2.11
+  local_dir: /target/scala-2.11/sparkplayground_2.11-1.0.jar
   on:
     branch: master
